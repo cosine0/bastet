@@ -3,7 +3,7 @@ project(bastet)
 option(TEST "test build" OFF)
 option(DEBUG "debug build" OFF)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES Ui.cpp Block.cpp Well.cpp BlockPosition.cpp Config.cpp BlockChooser.cpp BastetBlockChooser.cpp JsonSocket.cpp JsonSocket.h)
 if (TEST)

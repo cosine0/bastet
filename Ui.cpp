@@ -432,28 +432,47 @@ namespace Bastet
                         _move_log.push_back(Left);
                     p.MoveIfPossible(Left, b, w);
                 } else if (ch == keys->Right) {
+                    bool moved = p.MoveIfPossible(Right, b, w);
                     if (_socket == nullptr)
-                        _move_log.push_back(Right);
-                    p.MoveIfPossible(Right, b, w);
+                    {
+                        if (moved)
+                            _move_log.push_back(Right);
+                        else
+                            _move_log.push_back(None);
+                    }
                 } else if (ch == keys->Down)
                 {
-                    if (_socket == nullptr)
-                        _move_log.push_back(Down);
                     bool val = p.MoveIfPossible(Down, b, w);
+                    if (_socket == nullptr)
+                    {
+                        if (val)
+                            _move_log.push_back(Down);
+                        else
+                            _move_log.push_back(None);
+                    }
                     if (val)
                     {
                         auto_drop_time = 0;
                     } else break;
 
                 } else if (ch == keys->RotateCW) {
+                    bool moved = p.MoveIfPossible(RotateCW, b, w);
                     if (_socket == nullptr)
-                        _move_log.push_back(RotateCW);
-                    p.MoveIfPossible(RotateCW, b, w);
-
+                    {
+                        if (moved)
+                            _move_log.push_back(RotateCW);
+                        else
+                            _move_log.push_back(None);
+                    }
                 } else if (ch == keys->RotateCCW) {
+                    bool moved = p.MoveIfPossible(RotateCCW, b, w);
                     if (_socket == nullptr)
-                        _move_log.push_back(RotateCCW);
-                    p.MoveIfPossible(RotateCCW, b, w);
+                    {
+                        if (moved)
+                            _move_log.push_back(RotateCCW);
+                        else
+                            _move_log.push_back(None);
+                    }
                 } else if (ch == keys->Drop)
                 {
                     if (_socket == nullptr)
@@ -495,7 +514,7 @@ namespace Bastet
                 GetKey();
             }//keypress switch
         } //while(1)
-
+        _move_log.push_back(Landed);
         LinesCompleted lc = w->Lock(b, p);
         //locks also into _colors
         BOOST_FOREACH(const Dot &d, p.GetDots(b))if (d.y >= 0)
